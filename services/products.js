@@ -5,8 +5,8 @@ class ProductsService {
     this.collection = 'products';
     this.mongoDB = new MongoLib();
   }
-  async getProducts({ categories }) {
-    const query = categories && { categories: { $in: categories } };
+  async getProducts({ category }) {
+    const query = category && { category: { $in: category } };
     const products = await this.mongoDB.getAll(this.collection, query);
     return products || [];
   }

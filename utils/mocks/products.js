@@ -3,7 +3,7 @@ const productsMock = [
     id: 1,
     name: 'Americano',
     price: 19,
-    catogory: 'Café'
+    category: 'Café'
   },
   {
     id: 2,
