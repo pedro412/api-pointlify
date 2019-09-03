@@ -14,10 +14,10 @@ function productsApi(app) {
   const productsService = new ProductsService();
 
   router.get('/', async function(req, res, next) {
-    const { categories } = req.query;
+    const { category } = req.query;
 
     try {
-      const products = await productsService.getProducts({ categories });
+      const products = await productsService.getProducts({ category });
 
       res.status(200).json({
         ok: true,
