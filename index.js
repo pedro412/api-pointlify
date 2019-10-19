@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const { config } = require('./config/index');
 
+const authApi = require('./routes/auth');
 const productsApi = require('./routes/products');
 
 const {
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Routes
 productsApi(app);
+authApi(app);
 
 // Catch 404
 app.use(notFoundHandler);
