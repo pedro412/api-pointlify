@@ -7,7 +7,7 @@ const {
 } = require('../utils/schemas/Products');
 const validationHandler = require('../utils/middleware/validationHandler');
 
-function productsApi(app) {
+const productsApi = app => {
   const router = express.Router();
   app.use('/api/products', router);
 
@@ -110,6 +110,6 @@ function productsApi(app) {
       }
     }
   );
-}
+};
 
 module.exports = productsApi;
