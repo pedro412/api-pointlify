@@ -1,5 +1,6 @@
 const express = require('express');
 const ProductsService = require('../services/products');
+const passport = require('passport');
 const {
   productIdSchema,
   createProductSchema,
@@ -7,29 +8,37 @@ const {
 } = require('../utils/schemas/Products');
 const validationHandler = require('../utils/middleware/validationHandler');
 
+// JWT
+require('../utils/auth/strategies/jwt');
+
 const productsApi = app => {
   const router = express.Router();
   app.use('/api/products', router);
 
   const productsService = new ProductsService();
 
-  router.get('/', async function(req, res, next) {
-    const { category } = req.query;
+  router.get(
+    '/',
+    passport.authenticate('jwt', { session: false }),
+    async function(req, res, next) {
+      const { category } = req.query;
 
-    try {
-      const products = await productsService.getProducts({ category });
+      try {
+        const products = await productsService.getProducts({ category });
 
-      res.status(200).json({
-        ok: true,
-        products
-      });
-    } catch (err) {
-      next(err);
+        res.status(200).json({
+          ok: true,
+          products
+        });
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 
   router.get(
     '/:productId',
+    passport.authenticate('jwt', { session: false }),
     validationHandler({ productId: productIdSchema }, 'params'),
     async function(req, res, next) {
       const { productId } = req.params;
@@ -49,6 +58,7 @@ const productsApi = app => {
 
   router.post(
     '/',
+    passport.authenticate('jwt', { session: false }),
     validationHandler(createProductSchema),
     async (req, res, next) => {
       const { body: product } = req;
@@ -68,6 +78,7 @@ const productsApi = app => {
 
   router.put(
     '/:productId',
+    passport.authenticate('jwt', { session: false }),
     validationHandler({ productId: productIdSchema }, 'params'),
     validationHandler(updateProductSchema),
     async function(req, res, next) {
@@ -92,6 +103,7 @@ const productsApi = app => {
 
   router.delete(
     '/:productId',
+    passport.authenticate('jwt', { session: false }),
     validationHandler({ productId: productIdSchema }, 'params'),
     async function(req, res, next) {
       const { productId } = req.params;
