@@ -5,7 +5,6 @@ const { config } = require('./config/index');
 
 const authApi = require('./routes/auth');
 const productsApi = require('./routes/products');
-const usersApi = require('./routes/user');
 
 const {
   logErrors,
@@ -19,7 +18,6 @@ app.use(express.json());
 // Routes
 productsApi(app);
 authApi(app);
-usersApi(app);
 
 // Catch 404
 app.use(notFoundHandler);

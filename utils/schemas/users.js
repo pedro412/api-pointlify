@@ -12,7 +12,7 @@ const createUserSchema = {
     .email()
     .required(),
   password: joi.string().required(),
-  isAdmin: joi.boolean()
+  isAdmin: joi.boolean().default(false)
 };
 
 module.exports = {
