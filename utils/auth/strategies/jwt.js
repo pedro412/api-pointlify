@@ -11,17 +11,18 @@ passport.use(
       secretOrKey: config.authJwtSecret,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },
-    async function(tokenPayload, cb) {
+    async (tokenPayload, cb) => {
       const userService = new UserService();
 
       try {
-        const user = userService.getUser({ email: tokenPayload.email });
+        const user = await userService.getUser({ email: tokenPayload.email });
 
         if (!user) {
           return cb(boom.unauthorized(), false);
         }
 
         delete user.password;
+
         cb(null, { ...user, scopes: tokenPayload.scopes });
       } catch (error) {
         return cb(error);

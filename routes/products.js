@@ -21,10 +21,12 @@ const productsApi = app => {
     '/',
     passport.authenticate('jwt', { session: false }),
     async function(req, res, next) {
-      const { category } = req.query;
+      const id = req.user._id;
+
+      console.log(id);
 
       try {
-        const products = await productsService.getProducts({ category });
+        const products = await productsService.getProducts(id);
 
         res.status(200).json({
           ok: true,
@@ -62,6 +64,8 @@ const productsApi = app => {
     validationHandler(createProductSchema),
     async (req, res, next) => {
       const { body: product } = req;
+      const id = req.user._id;
+      product.userId = id;
 
       try {
         const createdProduct = await productsService.createProduct({ product });
