@@ -11,7 +11,7 @@ const createOrderSchema = {
   items: orderItemsSchema.required(),
   date: orderDateSchema.required(),
   orderTotalSchema: orderTotalSchema.required(),
-  userId: userIdSchema
+  userId: userIdSchema // not requiring it for the validation, tho it will be needed on the route itself
 };
 
 module.exports = {
