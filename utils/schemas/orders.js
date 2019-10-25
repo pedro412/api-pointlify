@@ -12,7 +12,7 @@ const orderTotalSchema = joi.number();
 
 const createOrderSchema = {
   items: orderItemsSchema.required(),
-  total: orderTotalSchema.required(),
+  total: orderTotalSchema.required(), // calculate this on the backend, but it have to be present for if the price changes the total may not change
   date: orderDateSchema,
   userId: userIdSchema // not requiring it for the validation, tho it will be needed on the route itself
 };
