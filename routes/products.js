@@ -21,12 +21,10 @@ const productsApi = app => {
     '/',
     passport.authenticate('jwt', { session: false }),
     async function(req, res, next) {
-      const id = req.user._id;
-
-      console.log(id);
+      const userId = req.user._id;
 
       try {
-        const products = await productsService.getProducts(id);
+        const products = await productsService.getProducts(userId);
 
         res.status(200).json({
           ok: true,
