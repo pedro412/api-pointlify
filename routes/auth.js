@@ -43,12 +43,12 @@ const authApi = app => {
             next(boom.unauthorized());
           }
 
-          const { _id: id, name, email } = user;
+          const { _id: id, email, organization } = user;
 
           const payload = {
             sub: id,
-            name,
             email,
+            organization,
             scopes: apiKey.scopes
           };
 
@@ -56,7 +56,11 @@ const authApi = app => {
             expiresIn: '15min'
           });
 
-          return res.status(200).json({ token, user: { id, name, email } });
+          return res.status(200).json({
+            ok: true,
+            token,
+            user: { id, email, organization }
+          });
         });
       } catch (error) {
         next(error);
