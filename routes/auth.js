@@ -74,6 +74,16 @@ const authApi = app => {
     async (req, res, next) => {
       const { body: user } = req;
 
+      const email = user.email;
+      const userExist = await usersService.getUser({ email });
+
+      if (userExist) {
+        return res.status(400).json({
+          ok: false,
+          message: 'El correo proporcionado ya esta en uso'
+        });
+      }
+
       try {
         const createdUserId = await usersService.createUser({ user });
 
